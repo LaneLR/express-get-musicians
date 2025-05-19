@@ -11,12 +11,50 @@ const {seedMusician} = require("./seedData");
 
 
 describe('./musicians endpoint', () => {
-    // Write your tests here
     
     
+    test("can access", async () => {
+        const res = await request(app).get("/musicians")
+        expect(res.statusCode).toEqual(200)
+    })
+
+    test("can retrieve correct data", async () => {
+        const res = await request(app).get("/musicians")
+        const resData = JSON.parse(res.text)
+        expect(resData[0].name).toEqual("Mick Jagger")
+    })
+})
 
 
-
-
+describe('./musicians/1 endpoint', () => {
     
+    
+    test("can access", async () => {
+        const res = await request(app).get("/musicians/1")
+        expect(res.statusCode).toEqual(200)
+    })
+
+    test("can retrieve correct data", async () => {
+        const res = await request(app).get("/musicians/1")
+        const resData = JSON.parse(res.text)
+        expect(resData.id).toEqual(1)
+        expect(resData.instrument).toEqual("Voice")
+    })
+
+})
+
+describe('./bands endpoint', () => {
+    
+    test("can access", async () => {
+        const res = await request(app).get("/bands")
+        expect(res.statusCode).toEqual(200)
+    })
+
+    test("can retrieve correct data", async () => {
+        const res = await request(app).get("/bands")
+        const resData = JSON.parse(res.text)
+        expect(resData[1].genre).toEqual("Pop")
+        expect(resData[2].name).toEqual("Coldplay")
+    })
+
 })
