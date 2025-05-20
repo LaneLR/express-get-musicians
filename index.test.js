@@ -43,6 +43,23 @@ describe('./musicians/1 endpoint', () => {
 
 })
 
+describe('./musicians/:id endpoint', () => {
+    
+    
+    test("can access", async () => {
+        const id = await Musician.findByPk(2).id
+        const res = await request(app).get(`/musicians/${id}`)
+        expect(res.statusCode).toEqual(200)
+    })
+
+    test("can retrieve correct data", async () => {
+       const id = await Musician.findByPk(2)
+        const res = await request(app).get(`/musicians/${id.id}`)
+        expect(res.body.name).toEqual("Drake")
+    })
+
+})
+
 describe('./bands endpoint', () => {
     
     test("can access", async () => {
