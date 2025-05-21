@@ -14,7 +14,7 @@ musicRouter.get("/:id", async (req, res) => {
     res.json(musician)
 })
 
-musicRouter.post("/", [check("name").not().trim().isEmpty(), check("instrument").not().isEmpty().trim()], async (req, res, next) => {
+musicRouter.post("/", [check("name").not().trim().isEmpty().isLength({min: 2, max: 20}), check("instrument").not().isEmpty().trim().isLength({min: 2, max: 20})], async (req, res, next) => {
     const errors = validationResult(req) 
     if (!errors.isEmpty()) {
         return res.json({error: errors.array()})

@@ -8,6 +8,7 @@ const { db } = require('../../db/connection');
 const { Musician } = require('../../models/index')
 const app = require('../app');
 const {seedMusician} = require("../../seedData");
+const { Json } = require('sequelize/lib/utils');
 
 
 describe('./musicians endpoint', () => {
@@ -26,11 +27,14 @@ describe('./musicians endpoint', () => {
     test("can throw errors", async () => {
         const res1 = await request(app).post("/musicians").send({name: "Prince   ", instrument: "  Vocals "})
         const res2 = await request(app).post("/musicians").send({name: "  ", instrument: "Vocals"})
+        const res3 = await request(app).post("/musicians").send({name: "KeyBoardSpamIFellOnMyKeyboardOwww", instrument: "Keyboard"})
         const resData = JSON.parse(res1.text)
         const res2Data = JSON.parse(res2.text)
+        const res3Data = JSON.parse(res3.text)
         console.log(resData)
         expect(resData.name).toEqual("Prince")
         expect(res2Data.name).toBeUndefined()
+        expect(res3Data).toHaveProperty("error")
     })
 })
 
