@@ -1,4 +1,5 @@
 const express = require("express");
+const {check, validationResult} = require("express-validator")
 const bandRouter = express.Router();
 const { Band } = require("../../models/index");
 
